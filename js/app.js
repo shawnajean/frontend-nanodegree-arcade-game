@@ -16,7 +16,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = (((this.x + 100) + (this.speed * dt)) % 600) - 100;
-    if( this.x > 600 ) {
+    if( this.x > 499 ) {
         this.set();
     }
 };
@@ -98,7 +98,7 @@ Player.prototype.handleInput = function(input) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-for( var i = 0; i < 6; i ++){
+for( var i = 0; i < 4; i ++){
     var enemy = new Enemy();
     allEnemies.push(enemy);
 }
