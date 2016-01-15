@@ -29,6 +29,8 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    console.log( level );
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -81,6 +83,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        //checkCollections();
         checkWin();
     }
 
@@ -113,6 +116,28 @@ var Engine = (function(global) {
             }
         });
     }
+
+    /*function checkCollections() {
+        loops through all 'collectable' items on the board
+        - picks items up
+        - calls turnIn() to level up and render new collections.
+
+        if collections array is empty, call addCollectables()
+    }*/
+
+    /*function turnIn() {
+        Checks if all stars for the level have been collected.
+
+        -> levelUp()
+    }*/
+
+    /*function levelUp() {
+
+    }*/
+
+    /*function addCollectables() {
+        Checks level, stars, key to draw next goal
+    }*/
 
     function checkWin() {
         if( grid( player.x, player.y ).y === 0 ) {

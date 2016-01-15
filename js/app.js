@@ -1,3 +1,12 @@
+var level = 0,
+    levels = ['images/char-girl.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-princess-girl.png'],
+    collections = [],
+    stars = 0,
+    key = false;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -46,7 +55,7 @@ Enemy.prototype.set = function() {
 // a handleInput() method.
 
 var Player = function() {
-    this.sprite = 'images/char-girl.png';
+    this.sprite = levels[level];
     this.x = 202;
     this.y = 404;
     this.speed = 1;
@@ -103,6 +112,7 @@ for( var i = 0; i < 4; i ++){
     allEnemies.push(enemy);
 }
 var player = new Player();
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
