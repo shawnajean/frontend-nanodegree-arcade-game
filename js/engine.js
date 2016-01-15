@@ -174,6 +174,8 @@ var Engine = (function(global) {
             }
         }
 
+        //Adds Selector box for star collection on home space
+        ctx.drawImage(Resources.get('images/Selector.png'), 202, 375);
 
         renderEntities();
     }
