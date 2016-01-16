@@ -7,6 +7,16 @@ var level = 0,
     stars = 0,
     key = false;
 
+var Item = function( newType, xLoc, yLoc ) {
+    var type = newType;
+    var x = xLoc;
+    var y = yLoc;
+}
+
+Item.prototype.render = function() {
+
+}
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
