@@ -8,13 +8,21 @@ var level = 0,
     key = false;
 
 var Item = function( newType, xLoc, yLoc ) {
-    var type = newType;
-    var x = xLoc;
-    var y = yLoc;
+    this.type = newType;
+    switch( type ){
+    case "star":
+        this.sprite = "images/Star.png";
+    case "key":
+        this.sprite = "images/Key.png";
+    case "heart":
+        this.sprite = "images/Heart.png";
+    }
+    this.x = xLoc;
+    this.y = yLoc;
 }
 
 Item.prototype.render = function() {
-
+    ctx.drawImage( Resources.get(this.sprite), this.x * 101, this.y * 83 );
 }
 
 // Enemies our player must avoid
@@ -111,6 +119,14 @@ Player.prototype.handleInput = function(input) {
     default:
         console.log("Something went wrong! Can't move character!");
     }
+}
+
+// Returns the grid square occupied by the provided x and y locations
+function grid( xLoc, yLoc ) {
+    var gridX = Math.ceil( xLoc / 100 );
+    var gridY = Math.ceil( yLoc / 85 );
+
+    return {x: gridX, y: gridY};
 }
 
 // Now instantiate your objects.

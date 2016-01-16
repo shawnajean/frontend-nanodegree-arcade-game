@@ -87,15 +87,6 @@ var Engine = (function(global) {
         checkWin();
     }
 
-    function grid( xLoc, yLoc ) {
-        var gridX = Math.ceil( xLoc / 100 );
-        var gridY = Math.ceil( yLoc / 85 );
-
-        //console.log( "X : " + gridX + "; Y : " + gridY );
-
-        return {x: gridX, y: gridY};
-    }
-
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
             /*      1 |_|_|_|_|_| <- water
