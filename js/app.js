@@ -9,20 +9,23 @@ var level = 0,
 
 var Item = function( newType, xLoc, yLoc ) {
     this.type = newType;
-    switch( type ){
+    switch( this.type ){
     case "star":
         this.sprite = "images/Star.png";
+        break;
     case "key":
         this.sprite = "images/Key.png";
+        break;
     case "heart":
         this.sprite = "images/Heart.png";
+        break;
     }
     this.x = xLoc;
     this.y = yLoc;
 }
 
 Item.prototype.render = function() {
-    ctx.drawImage( Resources.get(this.sprite), this.x * 101, this.y * 83 );
+    ctx.drawImage( Resources.get(this.sprite), this.x * 101, this.y * 83 - 25 );
 }
 
 // Enemies our player must avoid
@@ -112,8 +115,8 @@ Player.prototype.handleInput = function(input) {
         break;
     case 'down':
         this.y += 85;
-        if( this.y > 400 ) {
-            this.y = 400;
+        if( this.y > 385 ) {
+            this.y = 385;
         }
         break;
     default:
@@ -138,6 +141,9 @@ for( var i = 0; i < 4; i ++){
     allEnemies.push(enemy);
 }
 var player = new Player();
+var star = new Item( "star", 0, 4 );
+var key = new Item( "key", 3, 2 );
+var heart = new Item( "heart", 2, 1 );
 
 
 // This listens for key presses and sends the keys to your
