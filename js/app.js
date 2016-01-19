@@ -7,7 +7,7 @@ var level = 0,
     stars = 0,
     key = false;
 
-var Item = function( newType, xLoc, yLoc ) {
+var Item = function( newType, gridX, gridY ) {
     this.type = newType;
     switch( this.type ){
     case "star":
@@ -20,8 +20,8 @@ var Item = function( newType, xLoc, yLoc ) {
         this.sprite = "images/Heart.png";
         break;
     }
-    this.x = xLoc * 101 ;
-    this.y = yLoc * 83 - 25 ;
+    this.x = gridX * 101 ;
+    this.y = gridY * 83 - 25 ;
 }
 
 Item.prototype.render = function() {
@@ -149,10 +149,9 @@ for( var i = 0; i < 4; i ++){
     allEnemies.push(enemy);
 }
 var player = new Player();
-var collectables = [ new Item( "star", 0, 4 ),
-                     new Item( "key", 3, 2 ),
-                     new Item( "heart", 0, 2 ) ];
+var collectables = [ ];
 var keyCollected = false;
+var starsCollected = 0;
 
 
 // This listens for key presses and sends the keys to your

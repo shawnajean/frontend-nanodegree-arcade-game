@@ -82,18 +82,20 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
+        if( checkCollisions(player, allEnemies) ){
+            //playerDied();
+            player.reset();
+        }
         checkPickUp();
-        //checkCollections();
+        addCollectables();
         checkWin();
     }
 
-    function checkCollisions() {
+    function checkCollisions( object, collection ) {
         allEnemies.forEach(function(enemy) {
             if( checkCollision( player, enemy ) ){
                 //collision
-                //playerDied();
-                player.reset();
+                return true;
             }
         });
     }
@@ -108,10 +110,22 @@ var Engine = (function(global) {
     }
 
     function checkPickUp() {
+        var item;
         for( var i = 0; i < collectables.length; i++ ){
-            if( checkCollision( player, collectables[i] ) ){
-                keyCollected = true;
+            item = collectables[i];
+            if( checkCollision( player, item ) ){
                 collectables.splice( i, 1 );
+
+                switch( item.type ){
+                    case "star":
+                        starsCollected++;
+                        break;
+                    case "key":
+                        keyCollected = true;
+                        break;
+                    case "heart":
+                        break;
+                }
             }
         }
     }
@@ -126,9 +140,48 @@ var Engine = (function(global) {
 
     }*/
 
-    /*function addCollectables() {
-        Checks level, stars, key to draw next goal
-    }*/
+    //Checks level, stars, key to draw next goal
+    function addCollectables() {
+        //Add stars - if all stars for level have been collected
+        console.log( "Stars Collected = " + starsCollected );
+        while( starsCollected + countStars() !== ( level + 1 ) ) {
+            console.log( starsCollected + countStars() + " !== " + level + 1 );
+            addItem( "star" );
+        }
+
+        //Add key - if on level 4 and key has not been collected yet
+        if( level === 4 && keyCollected === false ) {
+            addItem( "key" );
+        }
+
+        //Add heart - randomly based on the time
+    }
+
+    function countStars() {
+        var x = 0;
+
+        collectables.forEach( function( item ) {
+            if( item.type === "star" ) {
+                x++;
+            }
+        });
+        //console.log( "Stars Counted = " + x );
+        return x;
+    }
+
+    function addItem( type ) {
+        var tempItem, square, xLoc, yLoc;
+        do{
+            square = Math.random * 100 % 15;
+
+            xLoc = square % 5;
+            yLoc = Math.ceil( ( square + 1 ) / 5 );
+
+            tempItem = new Item( type, xLoc, yLoc);
+        } while( checkCollisions( tempItem, collectables ) );
+
+        collectables.push(  );
+    }
 
     function checkWin() {
         if( grid( player.x, player.y ).y === 0 ) {
@@ -137,7 +190,7 @@ var Engine = (function(global) {
         }
     }
 
-    /* This is called by the update function  and loops through all of the
+    /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
      * player object. These update methods should focus purely on updating
