@@ -108,12 +108,12 @@ var Engine = (function(global) {
     }
 
     function checkPickUp() {
-        collectables.forEach(function( item ) {
-            if( checkCollision( player, item ) ){
+        for( var i = 0; i < collectables.length; i++ ){
+            if( checkCollision( player, collectables[i] ) ){
                 keyCollected = true;
-                console.log( keyCollected );
+                collectables.splice( i, 1 );
             }
-        });
+        }
     }
 
     /*function turnIn() {
