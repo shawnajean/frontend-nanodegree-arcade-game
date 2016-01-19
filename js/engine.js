@@ -82,13 +82,17 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
+        if( checkCollisions() ) {
+            //playerDied();
+            player.reset();
+        }
+        checkPickUp();
         //checkCollections();
         checkWin();
     }
 
-    function checkCollisions() {
-        allEnemies.forEach(function(enemy) {
+    function checkCollisions( object1, collection ) {
+        collection.forEach(function(object2) {
             /*      1 |_|_|_|_|_| <- water
                     2 |_|_|_|_|_|
                     3 |_|_|_|_|_|
@@ -97,24 +101,22 @@ var Engine = (function(global) {
                     6 |_|_|_|_|_| <- grass
                        1 2 3 4 5                */
 
-            enemyLoc = grid(enemy.x, enemy.y);
-            playerLoc = grid(player.x, player.y);
-            //console.log( "enemy: " + enemyLoc.x + ", " + enemyLoc.y + " | player: " + playerLoc.x + ", " + playerLoc.y )
-            if( enemyLoc.x === playerLoc.x && enemyLoc.y === playerLoc.y ){
+            obj2Loc = grid(object2.x, object2.y);
+            obj1Loc = grid(object1.x, object1.y);
+
+            if( obj2Loc.x === obj1Loc.x && obj2Loc.y === obj1Loc.y ){
                 //collision
-                //playerDied();
-                player.reset();
+                return true;
             }
         });
     }
 
-    /*function checkCollections() {
-        loops through all 'collectable' items on the board
-        - picks items up
-        - calls turnIn() to level up and render new collections.
-
-        if collections array is empty, call addCollectables()
-    }*/
+    function checkPickUp() {
+        if( checkCollisions(player, key) ) {
+            keyCollected = true;
+            
+        }
+    }
 
     /*function turnIn() {
         Checks if all stars for the level have been collected.

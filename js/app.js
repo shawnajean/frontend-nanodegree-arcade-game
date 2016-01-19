@@ -20,12 +20,12 @@ var Item = function( newType, xLoc, yLoc ) {
         this.sprite = "images/Heart.png";
         break;
     }
-    this.x = xLoc;
-    this.y = yLoc;
+    this.x = xLoc * 101 ;
+    this.y = yLoc * 83 - 25 ;
 }
 
 Item.prototype.render = function() {
-    ctx.drawImage( Resources.get(this.sprite), this.x * 101, this.y * 83 - 25 );
+    ctx.drawImage( Resources.get(this.sprite), this.x, this.y );
 }
 
 // Enemies our player must avoid
