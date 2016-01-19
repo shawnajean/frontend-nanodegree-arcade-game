@@ -126,7 +126,15 @@ Player.prototype.handleInput = function(input) {
 
 // Returns the grid square occupied by the provided x and y locations
 function grid( xLoc, yLoc ) {
-    var gridX = Math.ceil( xLoc / 100 );
+    /*      0 |_|_|_|_|_| <- water
+            1 |_|_|_|_|_|
+            2 |_|_|_|_|_|
+            3 |_|_|_|_|_|
+            4 |_|_|_|_|_| <- grass
+            5 |_|_|_|_|_| <- grass
+               0 1 2 3 4                */
+
+    var gridX = Math.floor( xLoc / 100 );
     var gridY = Math.ceil( yLoc / 85 );
 
     return {x: gridX, y: gridY};
@@ -141,9 +149,10 @@ for( var i = 0; i < 4; i ++){
     allEnemies.push(enemy);
 }
 var player = new Player();
-var star = new Item( "star", 0, 4 );
-var key = new Item( "key", 3, 2 );
-var heart = new Item( "heart", 2, 1 );
+var collectables = [ new Item( "star", 0, 4 ),
+                     new Item( "key", 3, 2 ),
+                     new Item( "heart", 0, 2 ) ];
+var keyCollected = false;
 
 
 // This listens for key presses and sends the keys to your

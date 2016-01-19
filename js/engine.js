@@ -82,40 +82,38 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        if( checkCollisions() ) {
-            //playerDied();
-            player.reset();
-        }
+        checkCollisions();
         checkPickUp();
         //checkCollections();
         checkWin();
     }
 
-    function checkCollisions( object1, collection ) {
-        collection.forEach(function(object2) {
-            /*      1 |_|_|_|_|_| <- water
-                    2 |_|_|_|_|_|
-                    3 |_|_|_|_|_|
-                    4 |_|_|_|_|_|
-                    5 |_|_|_|_|_| <- grass
-                    6 |_|_|_|_|_| <- grass
-                       1 2 3 4 5                */
-
-            obj2Loc = grid(object2.x, object2.y);
-            obj1Loc = grid(object1.x, object1.y);
-
-            if( obj2Loc.x === obj1Loc.x && obj2Loc.y === obj1Loc.y ){
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            if( checkCollision( player, enemy ) ){
                 //collision
-                return true;
+                //playerDied();
+                player.reset();
             }
         });
     }
 
-    function checkPickUp() {
-        if( checkCollisions(player, key) ) {
-            keyCollected = true;
-            
+    function checkCollision( object1, object2 ) {
+        obj1Loc = grid( object1.x, object1.y );
+        obj2Loc = grid( object2.x, object2.y );
+
+        if( obj1Loc.x === obj2Loc.x && obj1Loc.y === obj2Loc.y ) {
+            return true;
         }
+    }
+
+    function checkPickUp() {
+        collectables.forEach(function( item ) {
+            if( checkCollision( player, item ) ){
+                keyCollected = true;
+                console.log( keyCollected );
+            }
+        });
     }
 
     /*function turnIn() {
@@ -195,9 +193,9 @@ var Engine = (function(global) {
         //Adds Selector box for star collection on home space
         ctx.drawImage(Resources.get('images/Selector.png'), 202, 375);
 
-        star.render();
-        key.render();
-        heart.render();
+        collectables.forEach( function(item) {
+            item.render();
+        });
 
         renderEntities();
     }
