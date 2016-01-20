@@ -28,18 +28,18 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.randomizeSpeed = function() {
     this.speed = Math.random() * (200 - 75) + 75;
-}
+};
 
 Enemy.prototype.selectRow = function() {
     this.startingY = [60, 145, 230];
     this.y = this.startingY[Math.floor(Math.random() * 10) % 3];
-}
+};
 
 Enemy.prototype.set = function() {
     this.x = -100;
     this.selectRow();
     this.randomizeSpeed();
-}
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -50,18 +50,18 @@ var Player = function() {
     this.x = 202;
     this.y = 404;
     this.speed = 1;
-}
+};
 
 Player.prototype.reset = function() {
     this.x = 202;
     this.y = 385;
-}
+};
 
-Player.prototype.update = function(dt) { }
+Player.prototype.update = function(dt) { };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Player.prototype.handleInput = function(input) {
     switch(input) {
@@ -92,7 +92,7 @@ Player.prototype.handleInput = function(input) {
     default:
         console.log("Something went wrong! Can't move character!");
     }
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
